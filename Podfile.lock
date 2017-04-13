@@ -1,0 +1,12 @@
+PODS:
+  - YTBarButtonItemWithBadge (0.1.0)
+
+DEPENDENCIES:
+  - YTBarButtonItemWithBadge (~> 0.1)
+
+SPEC CHECKSUMS:
+  YTBarButtonItemWithBadge: 8d0bd605132cbf39c93c2c30926a466b1c82498c
+
+PODFILE CHECKSUM: 69dc08af8ea7f2eacc78e91aea4e369ca51bb787
+
+COCOAPODS: 1.1.1
