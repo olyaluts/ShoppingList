@@ -11,23 +11,25 @@ import YTBarButtonItemWithBadge
 
 class ProductsViewController: UITableViewController {
     
-    var detailViewController: DetailViewController? = nil
-    let shop = Shop()
     var products:[Product] = []
     let buttonWithBadge = YTBarButtonItemWithBadge()
+    let priceLabel = UILabel()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        shop.stock = [StockItem(product:Product(id:0, title:"njnjkn", price:10), quantity:2), StockItem(product:Product(id:1, title:"njnjnnkn", price:15.55), quantity:2)]
+        Shop.sharedShop.stock = [StockItem(product:Product(id:0, title:"Product 1", price:10), quantity:2), StockItem(product:Product(id:1, title:"Product 2", price:15.55), quantity:2)]
         
         
-        // buttonWithBadge.setHandler(callback: onClick);
+        buttonWithBadge.setHandler(callback: showCart)
         buttonWithBadge.setImage(image: UIImage(named: "Cart")!)
-        //        buttonWithBadge.setBadge(value: "10")
         self.navigationItem.setRightBarButton(buttonWithBadge.getBarButtonItem(), animated: true)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUI()
     }
     
     func updateBadge(quantity: Int) {
@@ -46,26 +48,34 @@ class ProductsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return shop.availableItems.count
+        return  Shop.sharedShop.availableItems.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! ProductTableViewCell
-        let item = shop.availableItems[indexPath.row]
+        let item = Shop.sharedShop.availableItems[indexPath.row]
         cell.configureCell(item: item)
-        cell.buyAction = { (cell) in
-          self.addItem(item: item)
+        cell.buttonAction = { (cell) in
+            try! Shop.sharedShop.addToCart(product: item.product, quantity: 1)
+            self.updateUI()
         }
         
         return cell
     }
     
-    func addItem(item:StockItem) {
-        try! self.shop.addToCart(product: item.product, quantity: 1)
-        self.updateBadge(quantity: self.shop.cart.items.count)
-        self.navigationItem.title = String(describing: self.shop.cart.totalPrice)
-        print(self.shop.cart.items.map({$0.quantity}))
+    func updateUI() {
+        self.updateBadge(quantity: Shop.sharedShop.cart.items.count)
+        self.navigationItem.title = String(describing: Shop.sharedShop.cart.totalPrice)
+        tableView.reloadData()
     }
+    
+    func showCart() {
+
+        self.performSegue(withIdentifier: "listToCart", sender: self)        
+    }
+    
+  
+    
     
 }
 

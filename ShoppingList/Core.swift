@@ -72,6 +72,8 @@ class Shop {
     var stock:[StockItem] = []
     var cart = Cart.empty()
     
+    static var sharedShop:Shop = Shop()
+    
     var availableItems : [StockItem] {
         return stock.filter({$0.quantity > 0})
     }
@@ -91,8 +93,8 @@ class Shop {
     
     func removeFromCart(product: Product) throws {
         let item = try cart.removeFromCart(product: product)
-        if var stockItem = stock.first(where: {$0.product == product}) {
-            stockItem.quantity += item.quantity
+        if let idx = stock.index(where: {$0.product == product}) {
+            stock[idx].quantity += item.quantity
         }
     }
 }
