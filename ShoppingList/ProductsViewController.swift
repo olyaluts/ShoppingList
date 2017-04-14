@@ -24,7 +24,6 @@ class ProductsViewController: UITableViewController {
         
         buttonWithBadge.setHandler(callback: showCart)
         buttonWithBadge.setImage(image: UIImage(named: "Cart")!)
-        buttonWithBadge.setTitle(value: "hbh")
         self.navigationItem.setRightBarButton(buttonWithBadge.getBarButtonItem(), animated: true)
     }
     
