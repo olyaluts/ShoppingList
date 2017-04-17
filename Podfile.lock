@@ -1,12 +1,12 @@
 PODS:
-  - YTBarButtonItemWithBadge (0.1.0)
+  - BadgeSwift (5.0.1)
 
 DEPENDENCIES:
-  - YTBarButtonItemWithBadge (~> 0.1)
+  - BadgeSwift (~> 5.0)
 
 SPEC CHECKSUMS:
-  YTBarButtonItemWithBadge: 8d0bd605132cbf39c93c2c30926a466b1c82498c
+  BadgeSwift: 3defa56f504bfb46f2300122c4a565ec9e405c1e
 
-PODFILE CHECKSUM: 69dc08af8ea7f2eacc78e91aea4e369ca51bb787
+PODFILE CHECKSUM: 6c61ae1666a4cd199e34079a68c4541139f07476
 
 COCOAPODS: 1.1.1
