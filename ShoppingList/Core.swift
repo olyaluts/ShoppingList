@@ -54,9 +54,12 @@ struct Cart {
         }
     }
     
-    mutating func removeFromCart(product: Product) throws -> CartItem {
+    mutating func removeFromCart(product: Product, quantity: Int = 1) throws {
         if let idx = items.index(where: { $0.product == product }) {
-            return items.remove(at: idx)
+            items[idx].quantity -= 1
+            if (items[idx].quantity == 0) {
+                items.remove(at: idx)
+            }
         } else {
             throw ShopError.notInCart
         }
@@ -91,10 +94,10 @@ class Shop {
         }
     }
     
-    func removeFromCart(product: Product) throws {
-        let item = try cart.removeFromCart(product: product)
+    func removeFromCart(product: Product, quantity: Int = 1) throws {
+        try cart.removeFromCart(product: product)
         if let idx = stock.index(where: {$0.product == product}) {
-            stock[idx].quantity += item.quantity
+            stock[idx].quantity += quantity
         }
     }
 }
